@@ -26,6 +26,14 @@ pipeline{
                 }
             }
         }
+        stage("Perform Test..."){
+            steps{
+                script{
+                    echo "Perfoming npm test..."
+                    sh "npm test"
+                }
+            }
+        }
         stage("Deploying to Render"){
             steps{
                 script{
@@ -34,6 +42,30 @@ pipeline{
                     echo "Deployed to render"
                 }
             }
+        }
+    }
+    post {
+        always {
+            echo "Pipeline build succeded"
+        }
+        success {
+            echo "Pipeline failed at some point! Sending notification email."
+            mail to: 'vicky.mutua@student.moringaschool.com',
+                 subject: "Jenkins Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: """
+                 Hello Vicky,
+
+                 The Jenkins pipeline build for '${env.JOB_NAME}' (Build #${env.BUILD_NUMBER}) has FAILED!
+
+                 Build Status: ${currentBuild.result}
+                 Triggered by: ${env.BUILD_CAUSE} (e.g., pushed code, manual trigger)
+
+                 Please review the console output for details:
+                 ${env.BUILD_URL}console
+
+                 Best regards,
+                 ipweek3pipeline
+                 """
         }
     }
 }
