@@ -8,20 +8,6 @@ const config = require('./_config');
 let index = require('./routes/index');
 let image = require('./routes/image');
 
-<<<<<<< HEAD
-const currentEnv = process.env.NODE_ENV || 'development'; 
-const mongoURI = config.mongoURI[currentEnv];
-
-mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => {
-    console.log(`MongoDB connected successfully for ${currentEnv} environment`);
-})
-.catch(err => {
-    console.error('MongoDB connection error:', err);
-=======
 // Initializing the app
 const app = express();
 
@@ -34,7 +20,6 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
     }else{
         console.log(`Connected to Database: ${MONGODB_URI}`)
     }
->>>>>>> test
 });
 
 // test if the database has connected successfully
