@@ -1,3 +1,6 @@
+def renderlink = "https://ip1week3.onrender.com/"
+def renderhook = "https://api.render.com/deploy/srv-d1cv0r95pdvs73c6qtmg?key=Fxd_U0WqR8A"
+
 pipeline{
     agent any
     
@@ -37,7 +40,6 @@ pipeline{
         stage("Deploying to Render"){
             steps{
                 script{
-                    def renderhook = "https://api.render.com/deploy/srv-d1cv0r95pdvs73c6qtmg?key=Fxd_U0WqR8A"
                     sh "curl -X POST ${renderhook}"
                     echo "Deployed to render"
                 }
@@ -45,6 +47,14 @@ pipeline{
         }
     }
     post {
+        success {
+            slackSend color: "good", message: """
+            The ${env.JOB_NAME} pipeline has been run and deployed successfully.
+            Build ID is: ${env.BUILD_NUMBER}.
+            Site rendered on: ${renderlink}. Click to view.
+            Jenkins Bot
+            """
+        }
         failure {
             echo "Pipeline failed at some point! Sending notification email."
             mail to: 'vicky.mutua@student.moringaschool.com',
