@@ -50,7 +50,7 @@ pipeline{
             mail to: 'vicky.mutua@student.moringaschool.com',
                  subject: "Jenkins Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                  body: """
-                 Hello Vicky,
+                 Hello Vicky Mutua,
 
                  The Jenkins pipeline build for '${env.JOB_NAME}' (Build #${env.BUILD_NUMBER}) has FAILED!
 
